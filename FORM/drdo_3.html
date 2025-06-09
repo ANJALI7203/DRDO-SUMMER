@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRDO Student Training Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">
+    <img src="IMAGES/Emblem_of_India.svg" alt="Govt Logo" class="logo" />
+    <div class="separator"></div>
+    <img src="IMAGES/download-Photoroom.png" alt="DRDO Logo" class="logo" />
+    <h1 class="portal-title">DRDO Student Training Portal</h1>
+  </div>
+
+  <div class="form-container">
+    <div class="tabs">
+      <button>Student Information</button>
+      <button>DRDO Attachments Details</button>
+      <button class="active-tab">Training Details</button>
+    </div>
+
+    <form class="form-section" onsubmit="submitAllData(event)">
+      <h2>DRDO Attachments Details</h2>
+      <div class="form-grid">
+        <div>
+          <label>Period of Attachment<span class="required">*</span></label>
+          <input type="text" name="Period_of_Attachment"/>
+        </div>
+        <div>
+          <label>Training Period<span class="required">*</span></label>
+          <input type="text" name="Training_Period"/>
+        </div>
+        <div>
+          <label>Time in week<span class="required">*</span></label>
+          <input type="text" name="Time" />
+        </div>
+        <div>
+          <label>Mode<span class="required">*</span></label>
+          <input type="text" name="Mode" />
+        </div>
+        <div>
+          <label>Certificate Issue<span class="required">*</span></label>
+          <select name="Certificate_Issue">
+            <option selected hidden>Is your Certificate being issued?</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+        <div>
+          <label>Issue Date<span class="required">*</span></label>
+          <input type="text" name="Issue_Date" />
+        </div>
+      </div>
+      <div class="button-group">
+        <a href="drdo_2.html" class="nav-button">Prev</a>
+        <button type="submit" class="nav-button">Submit</button>
+      </div>
+    </form>
+    <script>
+    function submitAllData(e) {
+      e.preventDefault();
+      const data1 = JSON.parse(localStorage.getItem('drdo_1') || '{}');
+      const data2 = JSON.parse(localStorage.getItem('drdo_2') || '{}');
+      const data3 = {};
+      document.querySelectorAll('input, select').forEach(el => {
+        if (el.name) data3[el.name] = el.value;
+      });
+
+      const allData = {...data1, ...data2, ...data3};
+      fetch('/submit-all', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(allData)
+      }).then(res => {
+        if (res.ok) {
+          localStorage.removeItem('drdo_1');
+          localStorage.removeItem('drdo_2');
+          window.location.href = 'drdo_last.html';
+        } else {
+          alert('Submission failed. Please try again.');
+        }
+      });
+    }
+    </script>
+  </div>
+</body>
+</html>

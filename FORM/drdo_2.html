@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DRDO Student Training Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="header">
+    <img src="IMAGES/Emblem_of_India.svg" alt="Govt Logo" class="logo" />
+    <div class="separator"></div>
+    <img src="IMAGES/download-Photoroom.png" alt="DRDO Logo" class="logo" />
+  <h1 class="portal-title">DRDO Student Training Portal</h1>
+  </div>
+
+  <div class="form-container">
+    <div class="tabs">
+      <button>Student Information</button>
+      <button class="active-tab">DRDO Attachments Details</button>
+      <button>Training Details</button>
+    </div>
+
+    <form class="form-section" onsubmit="saveAndNext(event)">
+      <h2>DRDO Attachments Details</h2>
+      <div class="form-grid">
+        <div>
+          <label>Division<span class="required">*</span></label>
+          <input type="text" name="Division" />
+        </div>
+        <div>
+          <label>Scientist Name<span class="required">*</span></label>
+          <input type="text" name="Scientist_Name" />
+        </div>
+        <div>
+          <label>Designation <span class="required">*</span></label>
+          <input type="text" name="Designation" />
+        </div>
+        </div>
+      <div class="button-group">
+        <a href="drdo_1.html" class="nav-button">Prev</a>
+        <button type="submit" class="nav-button">Next</button>
+    </div>
+    </form>
+    <script>
+      function saveAndNext(e) {
+      e.preventDefault();
+      const data = {};
+      document.querySelectorAll('input, select').forEach(el => {
+        if (el.name) data[el.name] = el.value;
+      });
+      localStorage.setItem('drdo_2', JSON.stringify(data));
+      window.location.href = 'drdo_3.html';
+      }
+    </script>
+ </div>
+</body>
+</html>
